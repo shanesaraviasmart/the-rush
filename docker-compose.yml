@@ -8,8 +8,8 @@ services:
       - 3000
     ports:
       - "3000:3000"
-    volumes:
-      - "./therush-client:/opt/therush-client"
+    # volumes:
+      # - "./therush-client:/opt/therush-client"
     environment:
       REACT_APP_API_URL: "http://localhost:8000/api/"
   api:
