@@ -1,0 +1,56 @@
+version: "3.8"
+   
+services:
+  client:
+    build: ./therush-client
+    container_name: client
+    expose:
+      - 3000
+    ports:
+      - "3000:3000"
+    volumes:
+      - "./therush-client:/opt/therush-client"
+    environment:
+      REACT_APP_API_URL: "http://localhost:8000/api/"
+  api:
+    build: ./therush
+    container_name: api
+    expose: 
+      - 8000
+    restart: always
+    volumes:
+      - "./therush:/opt/therush"
+    ports:
+      - "8000:8000"
+    environment:
+      CLIENT_URL: "http://localhost:3000"
+    depends_on:
+        db:
+            condition: service_healthy
+    networks:
+      - rush-network
+  db:
+    platform: linux/x86_64
+    image: mysql:5.7
+    container_name: db
+    expose: 
+      - 3306
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_DATABASE: rush
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: password
+      MYSQL_HOST: localhost
+    ports:
+      - "3306:3306"
+    healthcheck:
+        test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-u", "admin", "-ppassword"]
+        timeout: 20s
+        retries: 10
+    networks:
+      - rush-network
+networks:
+  rush-network:
+    driver: bridge

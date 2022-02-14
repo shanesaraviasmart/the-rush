@@ -1,0 +1,27 @@
+FROM python:3.9.0
+ENV PYTHONUNBUFFERED 1
+
+EXPOSE 8000
+
+RUN mkdir /opt/therush
+COPY . /opt/therush
+WORKDIR /opt/therush
+
+# RUN apt update -y
+# RUN apt upgrade -y
+
+RUN python -m pip install --upgrade pip
+
+# Install Pipenv
+RUN pip install pipenv
+
+# Install Dependencies
+RUN pipenv install --system
+# RUN pipenv install
+
+# Run Migrations
+# RUN python manage.py makemigrations
+# RUN python manage.py migrate
+
+# Run Django
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

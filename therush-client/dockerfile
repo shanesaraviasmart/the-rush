@@ -1,0 +1,16 @@
+FROM node:17.1.0
+
+EXPOSE 3000
+RUN mkdir /opt/therush-client
+COPY . /opt/therush-client
+WORKDIR /opt/therush-client
+
+# add `/app/node_modules/.bin` to $PATH
+ENV PATH /app/node_modules/.bin:$PATH
+
+# install app dependencies
+RUN npm install --silent
+RUN npm install react-scripts@3.4.1 -g --silent
+
+# start app
+CMD ["npm", "start"]
