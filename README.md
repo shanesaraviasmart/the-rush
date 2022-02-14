@@ -15,3 +15,6 @@
 - I also opted to save some time by reading and returning the file contents directly from the json file vs importing that data into a db and then dealing with it that way.
 - Config files and such would be gitignored if any sensitive information present. (Included for test purposes)
 - I would add loggers and tests.
+
+## Screenshot
+<img width="1512" alt="Screen Shot 2022-02-14 at 12 20 01 AM" src="https://user-images.githubusercontent.com/12818947/153804696-0e0c536d-f4a2-44cf-88ae-5946fd5b9770.png">
